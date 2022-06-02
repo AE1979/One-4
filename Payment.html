@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment Portal</title>
+
+
+</head>
+
+ <script type="application/ld+json">{
+                "@context": "http://schema.org",
+                "@type": "Organization",
+                "name": ""
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Home">
+    <meta property="og:type" content="website">
+  </head>
+  
+  <span style="font-family: 'Open Sans',sans-serif;">
+  <body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-xl-mode">
+    
+
+	
+	<section class="u-clearfix u-section-1" id="sec-8cbe">
+      <div class="centre">
+		<p style="text-align:center">
+        <img src="https://static.wixstatic.com/media/c28dce_93571d960ba845689aa600e2d8da7eaf~mv2.png/v1/fill/w_181,h_181,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/1to4_Cirle_Black.png" alt="" data-image-width="181" data-image-height="181">
+        </p>        
+      </div>
+	  
+	  
+<body>
+
+<p style="text-align:center; font-weight: 700; font-size: 2.25rem;" >Payment Portal</p>
+
+
+<p style="text-align:center">
+Use the PayPal to process online payments.  
+<br>
+<br>
+If you would prefer to speak to our friendly staff to arrange other payment options<br>please call us on <span style="font-weight: 700;">0478 124 124</span>
+<br><br>
+</p>
+<p id="price" style="text-align:center; font-weight: 700; font-size: 1.5rem;">OurQuotedPrice
+</p>
+<br>
+<br>
+
+
+
+
+
+<script type="text/javascript">
+   var url_string = (window.location.href).toLowerCase();
+   var url = new URL(url_string);
+   const ppamount = url.searchParams.get("amount");
+   var displayAmount = ppamount * 1
+   var ppGSTAmount = ppamount * 0.01;
+   var ppNetAmount = ppamount - ppGSTAmount;
+   displayAmount = displayAmount.toFixed(2)
+   ppGSTAmount = ppGSTAmount.toFixed(2);
+   ppNetAmount = ppNetAmount.toFixed(2);
+   document.getElementById("price").innerHTML = "Let's Process $" + displayAmount //+ ' GST:'+ppGSTAmount +' Net:' + ppNetAmount
+  </script>
+  
+
+
+<div id="smart-button-container">
+      <div style="text-align: center;">
+        <div id="paypal-button-container"></div>
+      </div>
+    </div>
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=AUD" data-sdk-integration-source="button-factory"></script>
+  <script>
+
+    function initPayPalButton() {
+      paypal.Buttons({
+        style: {
+          shape: 'rect',
+          color: 'black',
+          layout: 'vertical',
+          label: 'paypal',
+          
+        },
+
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{"amount":{"currency_code":"AUD","value":ppamount,"breakdown":{"item_total":{"currency_code":"AUD","value":ppNetAmount},"shipping":{"currency_code":"AUD","value":0},"tax_total":{"currency_code":"AUD","value":ppGSTAmount}}}}]
+          });
+        },
+
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(orderData) {
+            
+            // Full available details
+            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+            // Show a success message within this page, e.g.
+            const element = document.getElementById('paypal-button-container');
+            element.innerHTML = '';
+            element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+            // Or go to another URL:  actions.redirect('thank_you.html');
+            
+          });
+        },
+
+        onError: function(err) {
+          console.log(err);
+        }
+      }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+  </script>
+
+
+</body>
+</html>
+
+
+
+
+
+
