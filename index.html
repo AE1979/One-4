@@ -85,7 +85,7 @@ If you would prefer to speak to our friendly staff to arrange other payment opti
 
         createOrder: function(data, actions) {
           return actions.order.create({
-            purchase_units: [{"amount":{"currency_code":"AUD","value":ppamount,"breakdown":{"item_total":{"currency_code":"AUD","value":ppNetAmount},"shipping":{"currency_code":"AUD","value":0},"tax_total":{"currency_code":"AUD","value":ppGSTAmount}}}}]
+            purchase_units: [{"amount":{"currency_code":"AUD","value":ppamount,"breakdown":{"item_total":{"currency_code":"AUD","value":0},"shipping":{"currency_code":"AUD","value":0},"tax_total":{"currency_code":"AUD","value":0}}}}]
           });
         },
 
